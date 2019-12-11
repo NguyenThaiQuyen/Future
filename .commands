@@ -1,0 +1,34 @@
+#### future
+token = await Future.deployed()
+const c1 = token.getFundETH()
+const b1 = token.getFundDAB()
+
+const accounts = await web3.eth.getAccounts()
+
+token.sendFundETH({ value: web3.utils.toWei('0.2'), from: accounts[1]})
+
+dabToken = await NTQToken.at('0xd39D5386B67844A79197bFbeb3A389Bc9DBc8D29')
+
+dabToken.transfer('0xF61c15474Ca71F9C4f059fBe83E8B448f614b928', web3.utils.toWei('50'), { from: accounts[2]})
+
+dabToken.balanceOf(accounts[2])
+
+dabToken.buyToken({ value: web3.utils.toWei('1'), from: accounts[2]})
+
+const expired = token.hasOpened()
+
+const owner1 = token.isOwner({ from: '0xEa998B81ED2c52e5B40A3DF44DAf0286490c3C28'})
+const admin1 = token.isAdmin({ from: '0x75FbEb7fd0CB77a09e7707C9ea1ca13f00f2b41B'})
+
+web3.eth.getBalance("0x75FbEb7fd0CB77a09e7707C9ea1ca13f00f2b41B")
+
+
+const success1 = token.withdraw({ from: '0x75FbEb7fd0CB77a09e7707C9ea1ca13f00f2b41B'})
+
+address Future: 0xF61c15474Ca71F9C4f059fBe83E8B448f614b928
+address NTQToken: 0xd39D5386B67844A79197bFbeb3A389Bc9DBc8D29
+
+
+
+
+
