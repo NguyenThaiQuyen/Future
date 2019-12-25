@@ -12,7 +12,7 @@ contract ERC20 is IERC20 {
 
     event Transfer(address indexed from, address indexed to, uint256 value);
 
-    event Approval(address indexed owner, address indexed spender, uint256 value);
+    event Approve(address indexed owner, address indexed spender, uint256 value);
 
     modifier validAddress(address _to) {
         require(_to != address(0x0), 'Transfer to address OxO!');
@@ -31,16 +31,13 @@ contract ERC20 is IERC20 {
 
     // transfer from address owner to address to amount value
     function transfer(address _to, uint256 _value) validAddress(_to) public returns (bool) {
-        _balances[msg.sender] = _balances[msg.sender].sub(_value);
-        _balances[_to] = _balances[_to].add(_value);
-        emit Transfer(msg.sender, _to, _value);
+       _transfer(msg.sender, _to, _value);
         return true;
     }
 
     // grant for address spender use value token from address owner
     function approve(address _spender, uint256 _value) validAddress(msg.sender) validAddress(_spender) public returns (bool) {
-        _allowed[msg.sender][_spender] = _value;
-        emit Approval(msg.sender, _spender, _value);
+        _approve(msg.sender, _spender, _value);
         return true;
     }
 
@@ -50,26 +47,30 @@ contract ERC20 is IERC20 {
     }
 
     function transferFrom(address _from, address _to, uint256 _value) validAddress(_to) validValue(_from, _value) public returns (bool) {
-        require(_value <= _allowed[_from][msg.sender]);
-        _balances[_from] = _balances[_from].sub(_value);
-        _balances[_to] = _balances[_to].add(_value);
-        _allowed[_from][msg.sender] = _allowed[_from][msg.sender].sub(_value);
-        emit Transfer(_from, _to, _value);
+        _transfer(_from, _to, _value);
+        _approve(_from, msg.sender, _allowed[_from][msg.sender].sub(_value));
         return true;
     }
 
     function increaseAllowance(address _spender, uint256 _addValue) validAddress(_spender) public returns (bool) {
-        _allowed[msg.sender][_spender] = _allowed[msg.sender][_spender].add(_addValue);
-        emit Approval(msg.sender, _spender, _allowed[msg.sender][_spender]);
+        _approve(msg.sender, _spender, _allowed[msg.sender][_spender].add(_addValue));
         return true;
     }
 
-    function decreaseAllowance(address _spender, uint256 _addValue) validAddress(_spender) public returns (bool) {
-        require(_spender != address(0x0));
-
-        _allowed[msg.sender][_spender] = _allowed[msg.sender][_spender].sub(_addValue);
-        emit Approval(msg.sender, _spender, _allowed[msg.sender][_spender]);
+    function decreaseAllowance(address _spender, uint256 _subValue) validAddress(_spender) public returns (bool) {
+        _approve(msg.sender, _spender, _allowed[msg.sender][_spender].sub(_subValue));
         return true;
+    }
+
+    function _transfer(address _from, address _to, uint _value) validAddress(_to) internal {
+        _balances[_from] = _balances[_from].sub(_value);
+        _balances[_to] = _balances[_to].add(_value);
+        emit Transfer(_from, _to, _value);
+    }
+
+    function _approve(address _owner, address _spender, uint _value) validAddress(_spender) validAddress(_owner) internal {
+        _allowed[_owner][_spender] = _value;
+        emit Approve(_owner, _spender, _value);
     }
 }
 

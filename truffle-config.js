@@ -1,7 +1,7 @@
 const HDWalletProvider = require('truffle-hdwallet-provider');
 const fs = require('fs');
 
-const mnemonic = '8380C09107FF3023CAFDE603EF1FA00A5F3A78DDB9CE21EA69209DD5B43AC4EA';
+const mnemonic = 'CB707E09E93F65152C1FE5D8C9A3861D5C66CA472F836DC076FA48230DCC822E';
 const projectID = '3d8838955e914129b4e4ee983663ee39';
 
 module.exports = {
@@ -22,11 +22,11 @@ module.exports = {
     // tab if you use this network and you must also set the `host`, `port` and `network_id`
     // options below to some value.
     //
-    development: {
-      host: "127.0.0.1",     // Localhost (default: none)
-      port: 7545,            // Standard Ethereum port (default: none)
-      network_id: "*",       // Any network (default: none)
-    },
+    // development: {
+    //   host: "127.0.0.1",     // Localhost (default: none)
+    //   port: 7545,            // Standard Ethereum port (default: none)
+    //   network_id: "*",       // Any network (default: none)
+    // },
 
     // Another network with more advanced options...
     // advanced: {
@@ -45,8 +45,7 @@ module.exports = {
       provider: () => new HDWalletProvider(mnemonic, `https://ropsten.infura.io/v3/${projectID}`),
       network_id: 3,       // Ropsten's id
       gas: 5600000,        // Ropsten has a lower block limit than mainnet
-      timeoutBlocks: 200,  // # of blocks before a deployment times out  (minimum/default: 50)
-      skipDryRun: true     // Skip dry run before migrations? (default: false for public nets )
+      port: 8454
     },
 
     // Useful for private networks
@@ -68,7 +67,7 @@ module.exports = {
       version: "0.4.25",    // Fetch exact version from solc-bin (default: truffle's version)
       settings: {          // See the solidity docs for advice about optimization and evmVersion
         optimizer: {
-          enabled: false,
+          enabled: true,
           runs: 200
         },
       }

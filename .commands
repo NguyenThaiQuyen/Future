@@ -1,34 +1,52 @@
+rm -rf build && truffle migrate --reset --network ropsten
+
+rm -rf build && truffle migrate --reset
+truffle console
+
 #### future
 token = await Future.deployed()
-const c1 = token.getFundETH()
-const b1 = token.getFundDAB()
+
+dabToken = await NTQToken.at('0x47F0d1a3b9cAc5d77423eC23FdA358394D99c291')
+
+const c = token.getFundETH()
+const b = token.getFundDAB()
 
 const accounts = await web3.eth.getAccounts()
 
-token.sendFundETH({ value: web3.utils.toWei('0.2'), from: accounts[1]})
+token.sendFundETH({ value: web3.utils.toWei('0.2'), from: accounts[3]})
+
+token.withdraw({from: '0x75FbEb7fd0CB77a09e7707C9ea1ca13f00f2b41B'})
 
 dabToken = await NTQToken.at('0xd39D5386B67844A79197bFbeb3A389Bc9DBc8D29')
 
-dabToken.transfer('0xF61c15474Ca71F9C4f059fBe83E8B448f614b928', web3.utils.toWei('50'), { from: accounts[2]})
+dabToken.transfer('0xbd0B46ecAc00d909AE3C3d10A71e737309A7875a', web3.utils.toWei('20'), { from: accounts[3]})
+
+web3.eth.sendTransaction({from: accounts[4], to: "0xbd0B46ecAc00d909AE3C3d10A71e737309A7875a", value:web3.utils.toWei("1", "ether")});
 
 dabToken.balanceOf(accounts[2])
 
-dabToken.buyToken({ value: web3.utils.toWei('1'), from: accounts[2]})
+dabToken.buyToken({ value: web3.utils.toWei('1'), from: accounts[3]})
 
 const expired = token.hasOpened()
 
 const owner1 = token.isOwner({ from: '0xEa998B81ED2c52e5B40A3DF44DAf0286490c3C28'})
 const admin1 = token.isAdmin({ from: '0x75FbEb7fd0CB77a09e7707C9ea1ca13f00f2b41B'})
 
-web3.eth.getBalance("0x75FbEb7fd0CB77a09e7707C9ea1ca13f00f2b41B")
+web3.eth.getBalance("0xd9c2FF4d50bb848CD35Da7DDd08Bc4F6EAAaf451")
+dabToken.balanceOf("0xd9c2FF4d50bb848CD35Da7DDd08Bc4F6EAAaf451")
 
 
-const success1 = token.withdraw({ from: '0x75FbEb7fd0CB77a09e7707C9ea1ca13f00f2b41B'})
+token.withdraw({ from: "0xFeBe644eDB0A204242a8388500b003a2F7e28e67"})
 
-address Future: 0xF61c15474Ca71F9C4f059fBe83E8B448f614b928
-address NTQToken: 0xd39D5386B67844A79197bFbeb3A389Bc9DBc8D29
+address Future: 0x07112fa17b095951078801bd0a02c5a62c8941df
+address NTQToken: 0x446E8A51a803A487f9D60b7a21DC83D9f75f4f93
 
 
+#####
+truffle migrate --reset network ropsten
+
+### gop file
+truffle-flattener contracts/NTQToken.sol > out/NTQToken.sol
 
 
 
