@@ -1,45 +1,50 @@
-const BN = require('bn.js')
-const Burn = artifacts.require("./Burn.sol")
-const LuckyNumber = artifacts.require("./LuckyNumber.sol")
-const MockDABANKING = artifacts.require("./MockDABANKING.sol")
-
-require('chai')
-  .use(require('chai-as-promised'))
-  .use(require('chai-bn')(BN))
-  .should()
-
-async function initContracts(accounts) {
-  const mainAdmin = accounts[accounts.length - 1]
-  const gameAdmin = accounts[0]
-  const seed = process.env.SEED
-  const burnInstance = await Burn.new()
-  const luckyNumberInstance = await LuckyNumber.new(mainAdmin, gameAdmin, burnInstance.address, seed)
-  const mockDABANKINGInstance = await MockDABANKING.new(accounts, luckyNumberInstance.address)
-  await luckyNumberInstance.setDabToken(mockDABANKINGInstance.address)
-  return {
-    luckyNumberInstance,
-    mockDABANKINGInstance
-  }
-}
-
-const accountsMap = {}
-
-function getAccounts(accounts) {
-  accountsMap.gameAdmin = accounts[0]
-  accountsMap.mainAdmin = accounts[accounts.length - 1]
-  for (let i = 1; i < accounts.length - 1; i += 1) {
-    accountsMap[`user${i}`] = accounts[i]
-  }
-  return accountsMap
-}
-
-function listenEvent(response, eventName, index = 0) {
-  assert.equal(response.logs[index].event, eventName, eventName + ' event should fire.');
-}
-
-module.exports = {
-  getAccounts,
-  initContracts,
-  listenEvent,
-  BN
-}
+// const Future = artifacts.require("./Future.sol");
+// const NTQToken = artifacts.require("./NTQToken.sol");
+//
+// let future;
+// contract('Future', function (accounts) {
+//   describe('I. Admin setRareWinCheckpoint', () => {
+//     it('1. fail cause by not admin' , async () => {
+//       await catchRevertWithReason(luckyNumberInstance.setRareWinCheckpoint(0, { from: user1 }), 'onlyMainAdmin')
+//     })
+//     it('2. fail cause by input invalid value' , async () => {
+//       await catchRevertWithReason(luckyNumberInstance.setRareWinCheckpoint(99, { from: gameAdmin }), 'rare win is invalid')
+//       await catchRevertWithReason(luckyNumberInstance.setRareWinCheckpoint(9501, { from: gameAdmin }), 'rare win is invalid')
+//     })
+//     it('3. success' , async () => {
+//       const rareWinCheckpoint = 100
+//       await luckyNumberInstance.setRareWinCheckpoint(rareWinCheckpoint, { from: gameAdmin })
+//       const contractHighRollCheckpoint = await luckyNumberInstance.rareWinCheckpoint()
+//       contractHighRollCheckpoint.should.be.a.bignumber.that.equal(`${rareWinCheckpoint}`)
+//
+//     })
+//     it('4. should fire event' , async () => {
+//       const response = await luckyNumberInstance.setRareWinCheckpoint(100, { from: gameAdmin })
+//       util.listenEvent(response, 'RareWinCheckpointSet')
+//     })
+//   })
+//
+//   it('accounts[0] should able to change Target1 to Target2 in ProxyContract', async function () {
+//     await iProxyContract.changeContract_75b73cc2c1eb(Target2.address);
+//     assert.equal(await iProxyContract.getContract_58378af393c6(), iTarget2.address);
+//   });
+//   it('should able to call Target2 through ProxyContract', async function () {
+//     let ProxiedTarget2 = new web3.eth.Contract(iTarget2.abi, iProxyContract.address);
+//     await ProxiedTarget2.methods.calculate(4, 5).send({
+//       from: accounts[0],
+//       to: iProxyContract.address,
+//       gas: 5000000
+//     });
+//     ProxiedTarget2.getPastEvents('allEvents', { fromBlock: 0, toBlock: 'latest' }, function (e, r) {
+//       if (!e) {
+//         for (let i in r) {
+//           if (typeof r[i].event !== 'undefined') {
+//             console.log("\t", r[i].event, r[i].returnValues);
+//           }
+//         }
+//       }
+//     })
+//     assert.equal(await iProxyContract.getContract_58378af393c6(), iTarget2.address);
+//     assert.equal((await iProxyContract.data()).valueOf(), 20);
+//   });
+// });

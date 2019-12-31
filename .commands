@@ -38,15 +38,16 @@ dabToken.balanceOf("0xd9c2FF4d50bb848CD35Da7DDd08Bc4F6EAAaf451")
 
 token.withdraw({ from: "0xFeBe644eDB0A204242a8388500b003a2F7e28e67"})
 
-address Future: 0x07112fa17b095951078801bd0a02c5a62c8941df
+address Future: 0x4738a4308B1ab393Edd9d3B24442C7A7330D5837
 address NTQToken: 0x446E8A51a803A487f9D60b7a21DC83D9f75f4f93
+address MADBToken: 0xfbf0fa04b0be29bef16cbcc0b770a111c4e8af66
 
 
 #####
 truffle migrate --reset network ropsten
 
 ### gop file
-truffle-flattener contracts/NTQToken.sol > out/NTQToken.sol
+truffle-flattener contracts/Future.sol > out/Future.sol
 
 
 
