@@ -38,12 +38,6 @@ contract Future {
         _;
     }
 
-    // Doing
-//    function withdrawAll() onlyValidPermission public {
-//        require(dabToken.transfer(msg.sender, dabToken.balanceOf(address(this))), 'Withdraw failed!');
-//        msg.sender.transfer(address(this).balance);
-//    }
-
     function withdrawByType(address addressToken) onlyValidPermission validAddress(addressToken) public {
         token = IERC20(addressToken);
         require(token.transfer(msg.sender, token.balanceOf(address(this))), 'Withdraw failed!');

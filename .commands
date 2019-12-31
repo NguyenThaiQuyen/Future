@@ -1,4 +1,4 @@
-rm -rf build && truffle migrate --reset --network ropsten
+rm -rf build && truffle migrate --reset --network mainnet
 
 rm -rf build && truffle migrate --reset
 truffle console
@@ -35,13 +35,11 @@ const admin1 = token.isAdmin({ from: '0x75FbEb7fd0CB77a09e7707C9ea1ca13f00f2b41B
 web3.eth.getBalance("0xd9c2FF4d50bb848CD35Da7DDd08Bc4F6EAAaf451")
 dabToken.balanceOf("0xd9c2FF4d50bb848CD35Da7DDd08Bc4F6EAAaf451")
 
-
 token.withdraw({ from: "0xFeBe644eDB0A204242a8388500b003a2F7e28e67"})
 
-address Future: 0x4738a4308B1ab393Edd9d3B24442C7A7330D5837
+address Future: 0x9C6a68be3b5BFa059af5Da21678ff3cfe4426FDB
 address NTQToken: 0x446E8A51a803A487f9D60b7a21DC83D9f75f4f93
 address MADBToken: 0xfbf0fa04b0be29bef16cbcc0b770a111c4e8af66
-
 
 #####
 truffle migrate --reset network ropsten
